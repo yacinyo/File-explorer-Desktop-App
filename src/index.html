@@ -8,18 +8,26 @@
   <body>
       <h1>💖 Hello World!</h1>
       <p>Welcome to your Electron application.</p>
-      <button id="create-file">  create a file </button>
-    
-      <label for="file-contents">contents</label><br>
-    
-      <textarea id="file-contents"> 
-        
-        </textarea><br>
-       <label for="file-name"> file name</label><br>
-       <input id="file-name"> <br>
+      <button id="create-file">  create a file to save in C:/Files </button>
+      <button id="delete-file">  Delete a file form c:/Files</button>
+       <div>
+      <label for="file-contents" >content  <br>
+       
+       <textarea id="file-contents" placeholder="content to put in the file to create"></textarea><br>
+
+       </div>
+      
+        <div>
+       <label for="file-name"> file name </label><br>
+       <input id="file-name" placeholder="name of the file to save or delete form c:/Files" > <br>
+        </div>
    
     
-         <div id="filesList"> </div>
+        
+      <div id="filesList"> 
+       <h3>Listing and Reading files from C:/</h3>
+        <p> Choose any folder or file to read form C:/ except headen files</p>
+      </div>
   
   
         </body>

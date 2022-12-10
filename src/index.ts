@@ -1,6 +1,7 @@
 import { app, BrowserWindow ,ipcMain} from 'electron';
 
 import fs from 'fs';
+import { rmSync } from 'original-fs';
 const path=require('path');
 
 
@@ -65,17 +66,16 @@ ipcMain.handle('get-folder-files', (event,...args) => {
   { withFileTypes: true })
   
 
-  console.log('cest le dirName'+__dirname)
   
 return dir;
   
 })
  
-//Créer et écrire un fichier  dans le dossier Files ( Files placé dans le repertoir courant Webpack/main/)
+//Créer et écrire un fichier  dans le dossier Files (   C:/Files)
 
 
 ipcMain.on("save-txt",(event,filenameValue,contentsValue)=>{
-  let pathName=path.join(__dirname,'Files');
+  let pathName=path.resolve('C:/','Files');
 
   let file=path.join(pathName,filenameValue);
   //let contents=fileContents.value
@@ -86,6 +86,26 @@ ipcMain.on("save-txt",(event,filenameValue,contentsValue)=>{
     console.log("fichier cree avec succes")
   });
  })
+
+ //supprimer un fichier
+ ipcMain.on("delete-file",(event,filenameValue)=>{
+ 
+  let pathName=path.resolve('C:/','Files');
+
+  let file=path.join(pathName,filenameValue);
+ console.log('cest le path suppression'+file)
+ 
+// supprimer un fichier
+fs.unlink(file, function (err) {
+    if (err) throw err;
+    // if no error, file has been deleted successfully
+    filenameValue='';
+    console.log('File deleted!');
+});
+
+    
+ })
+
 
  
   //ovrir l'élément cliqué
@@ -104,13 +124,7 @@ ipcMain.on("save-txt",(event,filenameValue,contentsValue)=>{
   
  })
 
- ipcMain.on("delete-file",(event,filenameValue)=>{
-  
-  let file=path.resolve(filenameValue);
-  
-  fs.unlinkSync(file);
-    
- })
-
+ 
+ 
  
 

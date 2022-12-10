@@ -57,16 +57,24 @@ fileListContainer.appendChild(renderDirectoryFiles(fileList));
 function renderDirectoryFiles(fileList):HTMLElement{
     const divGlobale = document.createElement('div');
     for(const item of fileList){
-       
-        const div = document.createElement('div');
-        div.innerHTML = item.name ;
+    
+    const divElementToshow=document.createElement('div');
+        
+       const divForfile = document.createElement('div');
+        divForfile.innerHTML = item.name ; //listing des éléments présents sur disque C://
+
+        divElementToshow.appendChild(divForfile);
+        const divForButtons=document.createElement('div');
+        divElementToshow.appendChild(divForButtons);
+
         
         //création d'un boutton read  pour chaque fichier afin de le cliquer
         const btnRead= document.createElement('button');
         btnRead.setAttribute("class", "buttons");
         btnRead.innerHTML='read file';
         
-        //ajout d'un événement aux bouttons create file
+        
+        //ajout d'un événement "récuperation du nom de l'élément cliqué" au boutton read file
         btnRead.addEventListener("click", ()=>{
         const filenameValue=item.name;
         
@@ -78,25 +86,15 @@ function renderDirectoryFiles(fileList):HTMLElement{
 
          });
        
-        div.appendChild(btnRead);
+         divForButtons.appendChild(btnRead);
         
-        
-         //creation du bouton delete file
-         const btnDelete=document.createElement('button');
-         btnDelete.setAttribute("class", "buttons");
-
-         btnDelete.innerHTML='delete file';
-         //enevent du boutton delete file   
-         btnDelete.addEventListener("click",()=>{
-         const filenameValue=item.name;
-         window.electronApi.deleteFile(filenameValue);
-  
- 
-         })
-         div.appendChild(btnDelete);
         
 
-    divGlobale.appendChild(div);
+         
+
+        
+
+    divGlobale.appendChild(divElementToshow);
 
         }
 
@@ -104,7 +102,7 @@ return divGlobale;
    
        }
    
-       //creatiton du boutton create et définition de son événement.
+       //event du bouton create définition de son événement.
     const  btnCreate=document.getElementById("create-file");
      
     btnCreate.addEventListener("click",(file)=>{
@@ -120,6 +118,21 @@ return divGlobale;
     
      })
 
+      //event du bouton delete 
+     
+       const btnDelete=document.getElementById("delete-file");
+       btnDelete.addEventListener("click",(file)=>{
+       const  filenameValue=(document.getElementById('file-name') as HTMLInputElement).value;
+     
+       //const contentsValue=(document.getElementById("file-contents") as HTMLTextAreaElement).value;
+     
+       window.electronApi.deleteFile(filenameValue);
+
+       })
+     
+      //enevent du boutton delete file   
+      
+    
      
       
 
